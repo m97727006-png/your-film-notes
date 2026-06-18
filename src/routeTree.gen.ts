@@ -9,38 +9,129 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SeriesRouteImport } from './routes/series'
+import { Route as PerfilRouteImport } from './routes/perfil'
+import { Route as GenerosRouteImport } from './routes/generos'
+import { Route as FilmesRouteImport } from './routes/filmes'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FilmeSlugRouteImport } from './routes/filme.$slug'
 
+const SeriesRoute = SeriesRouteImport.update({
+  id: '/series',
+  path: '/series',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PerfilRoute = PerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GenerosRoute = GenerosRouteImport.update({
+  id: '/generos',
+  path: '/generos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FilmesRoute = FilmesRouteImport.update({
+  id: '/filmes',
+  path: '/filmes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FilmeSlugRoute = FilmeSlugRouteImport.update({
+  id: '/filme/$slug',
+  path: '/filme/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/filmes': typeof FilmesRoute
+  '/generos': typeof GenerosRoute
+  '/perfil': typeof PerfilRoute
+  '/series': typeof SeriesRoute
+  '/filme/$slug': typeof FilmeSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/filmes': typeof FilmesRoute
+  '/generos': typeof GenerosRoute
+  '/perfil': typeof PerfilRoute
+  '/series': typeof SeriesRoute
+  '/filme/$slug': typeof FilmeSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/filmes': typeof FilmesRoute
+  '/generos': typeof GenerosRoute
+  '/perfil': typeof PerfilRoute
+  '/series': typeof SeriesRoute
+  '/filme/$slug': typeof FilmeSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/filmes'
+    | '/generos'
+    | '/perfil'
+    | '/series'
+    | '/filme/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/filmes' | '/generos' | '/perfil' | '/series' | '/filme/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/filmes'
+    | '/generos'
+    | '/perfil'
+    | '/series'
+    | '/filme/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FilmesRoute: typeof FilmesRoute
+  GenerosRoute: typeof GenerosRoute
+  PerfilRoute: typeof PerfilRoute
+  SeriesRoute: typeof SeriesRoute
+  FilmeSlugRoute: typeof FilmeSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/series': {
+      id: '/series'
+      path: '/series'
+      fullPath: '/series'
+      preLoaderRoute: typeof SeriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/perfil': {
+      id: '/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof PerfilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/generos': {
+      id: '/generos'
+      path: '/generos'
+      fullPath: '/generos'
+      preLoaderRoute: typeof GenerosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/filmes': {
+      id: '/filmes'
+      path: '/filmes'
+      fullPath: '/filmes'
+      preLoaderRoute: typeof FilmesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +139,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/filme/$slug': {
+      id: '/filme/$slug'
+      path: '/filme/$slug'
+      fullPath: '/filme/$slug'
+      preLoaderRoute: typeof FilmeSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FilmesRoute: FilmesRoute,
+  GenerosRoute: GenerosRoute,
+  PerfilRoute: PerfilRoute,
+  SeriesRoute: SeriesRoute,
+  FilmeSlugRoute: FilmeSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
